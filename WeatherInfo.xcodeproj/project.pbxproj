@@ -136,13 +136,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		910E447C20A4A7000000F770 /* Controllers */ = {
+		910E447C20A4A7000000F770 /* Controllers&Presenters */ = {
 			isa = PBXGroup;
 			children = (
 				910E447F20A4A9530000F770 /* BaseController */,
 				910E448320A4AA380000F770 /* WeatherViewController */,
 			);
-			path = Controllers;
+			path = "Controllers&Presenters";
 			sourceTree = "<group>";
 		};
 		910E447D20A4A70F0000F770 /* Utils */ = {
@@ -235,7 +235,7 @@
 			children = (
 				910E447A20A4A6E60000F770 /* Models */,
 				910E447B20A4A6EF0000F770 /* Views */,
-				910E447C20A4A7000000F770 /* Controllers */,
+				910E447C20A4A7000000F770 /* Controllers&Presenters */,
 				91BB24A820A341B3004E9AFB /* Service */,
 				910E447920A4A6D00000F770 /* Network */,
 				910E447D20A4A70F0000F770 /* Utils */,
