@@ -12,7 +12,6 @@ import MBProgressHUD
 class BaseService {
     
     func showLoading() {
-        // let view = UIApplication.shared.windows[0]
         if let rootVC = UIApplication.shared.keyWindow?.rootViewController {
             MBProgressHUD.showAdded(to: rootVC.view, animated: true)
         }

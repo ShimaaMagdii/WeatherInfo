@@ -1,27 +1,28 @@
 //
-//  GetWeatherModel.swift
+//  WeatherModel.swift
 //  WeatherInfo
 //
-//  Created by Shimaa Magdi on 5/10/18.
+//  Created by Shimaa Magdi on 5/11/18.
 //  Copyright © 2018 ShimaaMagdi. All rights reserved.
 //
 
 import Foundation
 import ObjectMapper
 
-class GetWeatherModel: BaseMappable {
-    var base : String?
-    var clouds : Cloud?
-    var cod : Int?
-    var coord : Coord?
-    var dt : Int?
-    var id : Int?
-    var main : Main?
-    var name : String?
-    var sys : Sy?
-    var visibility : Int?
-    var weather : [Weather]?
-    var wind : Wind?
+class WeatherModel: BaseMappable {
+    
+    private(set) var base : String?
+    private(set) var clouds : Cloud?
+    private(set) var cod : Int?
+    private(set) var coord : Coord?
+    private(set) var dt : Int?
+    private(set) var id : Int?
+    private(set) var main : Main?
+    private(set) var name : String?
+    private(set) var sys : Sy?
+    private(set) var visibility : Int?
+    private(set) var weather : [Weather]?
+    private(set) var wind : Wind?
     
     override func mapping(map: Map)
     {
@@ -42,7 +43,7 @@ class GetWeatherModel: BaseMappable {
 }
 class Cloud: BaseMappable {
     
-    var all : Int?
+    private(set) var all : Int?
     
     override func mapping(map: Map)
     {
@@ -52,8 +53,8 @@ class Cloud: BaseMappable {
 
 class Coord: BaseMappable{
     
-    var lat : Float?
-    var lon : Float?
+    private(set) var lat : Float?
+    private(set) var lon : Float?
     
     override func mapping(map: Map)
     {
@@ -64,11 +65,11 @@ class Coord: BaseMappable{
 
 class Main : BaseMappable{
     
-    var humidity : Int?
-    var pressure : Int?
-    var temp : Float?
-    var tempMax : Float?
-    var tempMin : Float?
+    private(set) var humidity : Int?
+    private(set) var pressure : Int?
+    private(set) var temp : Double?
+    private(set) var tempMax : Double?
+    private(set) var tempMin : Double?
     
     override func mapping(map: Map)
     {
@@ -82,12 +83,12 @@ class Main : BaseMappable{
 
 class Sy :BaseMappable {
     
-    var country : String?
-    var id : Int?
-    var message : Float?
-    var sunrise : Int?
-    var sunset : Int?
-    var type : Int?
+    private(set) var country : String?
+    private(set) var id : Int?
+    private(set) var message : Float?
+    private(set) var sunrise : Int?
+    private(set) var sunset : Int?
+    private(set) var type : Int?
     
     override func mapping(map: Map)
     {
@@ -102,10 +103,10 @@ class Sy :BaseMappable {
 
 class Weather : BaseMappable {
     
-    var descriptionField : String?
-    var icon : String?
-    var id : Int?
-    var main : String?
+    private(set) var descriptionField : String?
+    private(set) var icon : String?
+    private(set) var id : Int?
+    private(set) var main : String?
     
     override func mapping(map: Map)
     {
@@ -118,8 +119,8 @@ class Weather : BaseMappable {
 
 class Wind : BaseMappable {
     
-    var deg : Int?
-    var speed : Float?
+    private(set) var deg : Int?
+    private(set) var speed : Float?
     
     override func mapping(map: Map)
     {

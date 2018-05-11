@@ -17,10 +17,11 @@ class ForecastPresenter {
         self.delegate = delegate
     }
     
-    func getForecasts(forLat lat: Double, andLon lon: Double){
+    func getForecasts(forCity cityName: String){
         
-        service.getForecast(forLat: lat, andLon: lon, success: { forecastsList in
-            self.delegate.setForecastsList(forecastsList: forecastsList)
+        service.getForecast(forCity: cityName, success: { [weak self] forecastsList in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate.setForecastsList(forecastsList: forecastsList)
         })
     }
     

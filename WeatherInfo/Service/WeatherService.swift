@@ -19,7 +19,7 @@ class WeatherService: BaseService {
         showLoading()
         NetworkManager.performRequestWithPath(baseUrl: ServiceUrls.BASE_URL, path: path, requestMethod: .get, requestParam: nil, headersParam: nil, success: { respone in
              self.hideLoading()
-            if let weatherDataModel :GetWeatherModel = Mapper<GetWeatherModel>().map(JSON: respone as! [String : Any]) {
+            if let weatherDataModel :WeatherModel = Mapper<WeatherModel>().map(JSON: respone as! [String : Any]) {
                 let weatherViewModel = self.mapWeatherModelToWeatherViewModel(weatherDataModel)
                 success(weatherViewModel)
             }
@@ -28,10 +28,10 @@ class WeatherService: BaseService {
         })
     }
     
-    func mapWeatherModelToWeatherViewModel (_ weatherModel: GetWeatherModel) -> WeatherViewModel {
-        var currentTemp = 0.0
+    func mapWeatherModelToWeatherViewModel (_ weatherModel: WeatherModel) -> WeatherViewModel {
+        var currentTemp = ""
         var name = ""
-        var weatherType = ""
+        var weatherType = WeatherType.Unknown
         
         let dateFormater = DateFormatter()
         dateFormater.dateStyle = .long
@@ -42,11 +42,12 @@ class WeatherService: BaseService {
         if let cityName = weatherModel.name {
             name = cityName
         }
-        if let main = weatherModel.weather?[0].main {
-            weatherType = main
+        if let main = weatherModel.weather?[0].main, let weatherTypeValue = WeatherType(rawValue: main) {
+            weatherType = weatherTypeValue
         }
         if let temp = weatherModel.main?.temp {
-             currentTemp = Double (temp - 273.15)
+             let convertedTemp = Int(temp - 273.15)
+             currentTemp = "\(convertedTemp)°"
         }
         return WeatherViewModel(name: name, weatherType: weatherType, currentTemp: currentTemp, date: date)
         

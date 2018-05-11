@@ -14,64 +14,32 @@ protocol ForecastViewControllerProtocol: BaseViewControllerViewProtocol {
 
 class ForecastViewController: BaseViewController {
     
+    @IBOutlet weak var forecastTableView: UITableView!
+    
+    var cityName: String!
     var presenter: ForecastPresenter!
     var forecastsList = [ForecastViewModel]() {
         didSet{
-            print("forecastsList updated = \(forecastsList.count)")
             forecastTableView.reloadData()
         }
     }
     
-    @IBOutlet weak var forecastTableView: UITableView!
-  
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter = ForecastPresenter.init(delegate: self)
-        
-        let lat = 37.33233141
-        let lon = -122.0312186
-        presenter.getForecasts(forLat: lat, andLon: lon)
-        
+        presenter.getForecasts(forCity: cityName)
     }
     
     private func setupView(){
-        self.title = "test"
-        self.navigationController?.title = "testeer"
         
     }
     
-    
-    
+
     static func create () -> ForecastViewController {
         return UIStoryboard(name: StoryboardIdentifier.MainStoryboardIdentifier, bundle: Bundle.main).instantiateViewController(withIdentifier: StoryboardIdentifier.ForecastVCIdentifier) as! ForecastViewController
     }
 }
-extension ForecastViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forecastsList.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell: ForecastCell = tableView.dequeueReusableCell(withIdentifier: StoryboardIdentifier.ForecastCellIdentifier, for: indexPath) as! ForecastCell
-        cell.configureCell(withForecast: forecastsList[indexPath.row])
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(forecastsList[indexPath.row].highTemp)
-    }
-}
+
 
 extension ForecastViewController: ForecastViewControllerProtocol {
     func setForecastsList(forecastsList: [ForecastViewModel]) {

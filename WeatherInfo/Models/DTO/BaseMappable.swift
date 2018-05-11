@@ -30,5 +30,5 @@ class BaseMappable: Mappable {
 }
 
 fileprivate struct MappingKey {
-    static let StatusCode             : String = "StatusCode"
+    static let StatusCode: String = "StatusCode"
 }

@@ -15,13 +15,11 @@ class ForecastCell: UITableViewCell {
     @IBOutlet weak var highTemplbl: UILabel!
     @IBOutlet weak var lowTemplbl: UILabel!
     
-    
-    
     func configureCell (withForecast forecastModel: ForecastViewModel){
         highTemplbl.text = forecastModel.highTemp
         lowTemplbl.text = forecastModel.lowTemp
         dayLabel.text = forecastModel.date
-        weatherIcon.image = UIImage(named: forecastModel.weatherType)
+        weatherIcon.image = UIImage(named: forecastModel.weatherType.rawValue)
     }
     
     
