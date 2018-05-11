@@ -20,7 +20,7 @@ class WeatherPresenter {
     func getWeather(forCity cityName: String)
     {
         service.getWeather(forCity: cityName) { weatherModel in
-            print(weatherModel.toJSON())
+            print(weatherModel.name)
         }
     }
 

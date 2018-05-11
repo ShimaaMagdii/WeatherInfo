@@ -29,15 +29,16 @@ extension String {
     }
 }
 
+extension Date {
+    func dayOfTheWeek() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: self)
+    }
+}
+
 extension UIColor {
     static let navColor = UIColor.init(red: 55/255, green: 59/255, blue: 56/255, alpha: 1)
-    static let titleColor = UIColor.init(red: 255/255, green: 211/255, blue: 128/255, alpha: 1)
-    static let greenThemeColor = UIColor.init(red: 0/255, green: 109/255, blue: 105/255, alpha: 1)
-    static let seperatorColor = UIColor.init(red: 42/255, green: 48/255, blue: 44/255, alpha: 1)
-    static let asteriskColor = UIColor.init(red: 154/255, green: 116/255, blue: 42/255, alpha: 1)
-    static let brownColor  =  UIColor.init(red: 227/255, green: 221/255, blue: 211/255, alpha: 1)
-    static let progressColor = UIColor(red: 154/255, green: 116/255, blue: 42/255, alpha: 1)
-    static let completeProgressColor =  UIColor(red: 10/255, green: 123/255, blue: 39/255, alpha: 1)
 }
 
 extension UIView {
