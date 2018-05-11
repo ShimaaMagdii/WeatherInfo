@@ -14,6 +14,7 @@ class ForecastCell: UITableViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var highTemplbl: UILabel!
     @IBOutlet weak var lowTemplbl: UILabel!
+    @IBOutlet weak var containerView: UIView!
     
     func configureCell (withForecast forecastModel: ForecastViewModel){
         highTemplbl.text = forecastModel.highTemp
@@ -22,5 +23,10 @@ class ForecastCell: UITableViewCell {
         weatherIcon.image = UIImage(named: forecastModel.weatherType.rawValue)
     }
     
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        containerView.addCornerRadius()
+        containerView.dropCardShadow()
+    }
+
 }

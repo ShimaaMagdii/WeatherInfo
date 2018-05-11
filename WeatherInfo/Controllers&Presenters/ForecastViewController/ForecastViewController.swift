@@ -15,6 +15,7 @@ protocol ForecastViewControllerProtocol: BaseViewControllerViewProtocol {
 class ForecastViewController: BaseViewController {
     
     @IBOutlet weak var forecastTableView: UITableView!
+    @IBOutlet weak var titleLbl: UILabel!
     
     var cityName: String!
     var presenter: ForecastPresenter!
@@ -26,12 +27,13 @@ class ForecastViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         presenter = ForecastPresenter.init(delegate: self)
         presenter.getForecasts(forCity: cityName)
     }
     
     private func setupView(){
-        
+       titleLbl.text = cityName
     }
     
 
