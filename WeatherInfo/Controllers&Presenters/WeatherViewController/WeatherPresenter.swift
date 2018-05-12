@@ -11,7 +11,7 @@ import Foundation
 class WeatherPresenter {
     var defaultCity = "London" {
         didSet{
-             getWeather(forCity: defaultCity)
+            getWeather(forCity: defaultCity)
         }
     }
     let exceedNumberOfCitiesErrorMsg = "You allowed to add only 5 cities"
@@ -24,33 +24,54 @@ class WeatherPresenter {
     
     init(delegate: WeatherViewControllerProtocol){
         self.delegate = delegate
-       // LocationManager.sharedManager.setupDelegate(delegate: self)
-        getWeather(forCity: defaultCity)
+        loadWeatherData()
     }
     
+    func loadWeatherData (){
+        let cachedList = service.getCachedCitiesList()
+        if cachedList.count > 0 {
+            citiesWeatherList = cachedList
+            delegate.setCitiesWeatherList(cachedList)
+        }else {
+            // get defult city
+            // LocationManager.sharedManager.setupDelegate(delegate: self)
+            getWeather(forCity: defaultCity)
+        }
+        
+    }
     
     func getWeather(forCity cityName: String)
     {
-        service.getWeather(forCity: cityName) { [weak self]
-            weatherModel in
-           guard let strongSelf = self else { return }
-            strongSelf.citiesWeatherList.append(weatherModel)
-            strongSelf.delegate.setCitiesWeatherList(strongSelf.citiesWeatherList)
-            strongSelf.delegate.setWeatherModel(weatherModel)
+        if Connectivity.isConnectedToInternet {
+            service.getWeather(forCity: cityName) { [weak self]
+                weatherModel in
+                guard let strongSelf = self else { return }
+                strongSelf.updateCitiestList(withNewWeatherModel: weatherModel)
+            }
+        } else {
+            delegate.showMessage(WithType: MessageType.Warning, andMsg: "Enable internet connection")
         }
+    }
+    
+    func updateCitiestList(withNewWeatherModel weatherModel: WeatherViewModel) {
+        citiesWeatherList.append(weatherModel)
+        delegate.setCitiesWeatherList(self.citiesWeatherList)
+        delegate.setWeatherModel(weatherModel)
+        service.updateCitiesList(citiesWeatherList: citiesWeatherList)
     }
     
     func userRemovedCity(atIndex index: Int) {
         citiesWeatherList.remove(at: index)
+        service.updateCitiesList(citiesWeatherList: citiesWeatherList)
     }
     
     func userAddedNewCity(_ cityName: String){
         if citiesWeatherList.count == allowedCount {
-             self.delegate.showMessage(WithType: MessageType.Warning, andMsg: exceedNumberOfCitiesErrorMsg)
+            delegate.showMessage(WithType: MessageType.Warning, andMsg: exceedNumberOfCitiesErrorMsg)
         }else if isExist(cityName) {
-            self.delegate.showMessage(WithType: MessageType.Warning, andMsg: existingCityErrorMsg)
+            delegate.showMessage(WithType: MessageType.Warning, andMsg: existingCityErrorMsg)
         }else{
-             self.getWeather(forCity: cityName)
+            getWeather(forCity: cityName)
         }
     }
     
@@ -67,13 +88,11 @@ class WeatherPresenter {
 
 extension WeatherPresenter: LocationUpdateProtocol{
     func userLocationUpdated(withCity userCity: String) {
-       
-        self.defaultCity = userCity
+        defaultCity = userCity
     }
     
     func needLocationPermission() {
-       // getWeather(forCity: defaultCity)
-        self.defaultCity = "London"
+        defaultCity = "London"
     }
     
 }

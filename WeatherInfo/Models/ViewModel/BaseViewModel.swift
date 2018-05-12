@@ -8,8 +8,8 @@
 
 import Foundation
 
-class BaseViewModel : NSObject{
-    
+class BaseViewModel : NSObject {
+
 }
 
 enum WeatherType: String {

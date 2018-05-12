@@ -13,14 +13,25 @@ import Alamofire
 typealias ForecastDataClosure = (_ forecastsList: [ForecastViewModel]) -> Void
 
 class ForecastService: BaseService {
+
+    func getForecast(forCity cityName: String, success: @escaping ForecastDataClosure)
+    {
+        if let cachedObjects = getCachedForecast(forCity: cityName){
+            success(cachedObjects)
+        }else{
+            getForecastFromAPI(forCity: cityName, success: success)
+        }
+    }
     
-    func getForecast(forCity cityName: String, success: @escaping ForecastDataClosure) {
+    
+  private func getForecastFromAPI(forCity cityName: String, success: @escaping ForecastDataClosure) {
         let path = String(format: ServiceUrls.GET_CITY_FORECAST_URL, cityName)
         showLoading()
         NetworkManager.performRequestWithPath(baseUrl: ServiceUrls.BASE_URL, path: path, requestMethod: .get, requestParam: nil, headersParam: nil, success: { respone in
             self.hideLoading()
             if let forecastDataModel :ForecastsModel = Mapper<ForecastsModel>().map(JSON: respone as! [String : Any]) {
                 let forecastsList = self.mapForecastModelToForecastViewModel(forecastDataModel)
+                self.updateForecastsList(forCity: cityName, forecastsList: forecastsList)
                 success(forecastsList)
             }
         }, failure: { error in
@@ -28,7 +39,28 @@ class ForecastService: BaseService {
         })
     }
     
-    func mapForecastModelToForecastViewModel (_ forecastDataModel: ForecastsModel) -> [ForecastViewModel] {
+    
+   private func getCachedForecast(forCity cityName:String) -> [ForecastViewModel]? {
+        
+        if let cachedForecasts = PersistenceManager.loadNSArray(path: .CityForecast, withName: cityName) {
+            var result = [ForecastViewModel]()
+            for forecast in cachedForecasts {
+                result.append(forecast as! ForecastViewModel)
+            }
+            return result
+        }
+        return nil
+    }
+    
+   private func updateForecastsList(forCity cityName:String, forecastsList: [ForecastViewModel]) {
+        let mutableObjects = NSMutableArray()
+        for forecast in forecastsList {
+            mutableObjects.add(forecast)
+        }
+        PersistenceManager.saveNSArray(arrayToSave: mutableObjects, path: .CityForecast, withName: cityName)
+    }
+    
+    private func mapForecastModelToForecastViewModel (_ forecastDataModel: ForecastsModel) -> [ForecastViewModel] {
         var forecastsList = [ForecastViewModel]()
         if let forecastsData = forecastDataModel.list {
             
@@ -62,6 +94,7 @@ class ForecastService: BaseService {
                 }
                 
                 let forecastViewModel = ForecastViewModel(highTemp: highTemp, lowTemp: lowTemp, weatherType: weatherType, date: date, day: day)
+              
                 forecastsList.append(forecastViewModel)
             }
         }

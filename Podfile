@@ -4,10 +4,10 @@ target 'WeatherInfo' do
   
   use_frameworks!
 
-  	pod 'Alamofire'
+  	    pod 'Alamofire'
         pod 'ObjectMapper'
         pod 'MBProgressHUD'
-	pod 'SwiftMessages'
+        pod 'SwiftMessages'
         pod 'RealmSwift'
 
   target 'WeatherInfoTests' do

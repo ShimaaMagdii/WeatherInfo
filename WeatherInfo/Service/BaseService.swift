@@ -23,6 +23,10 @@ class BaseService {
         }
     }
     
+    func showWarningMsg(_ msg: String){
+        Utilities.showWarningNudge(WithMsg: msg)
+    }
+    
     func handelError (error: NSError){
         self.hideLoading()
         Utilities.showErrorNudge(WithError: error.localizedDescription)

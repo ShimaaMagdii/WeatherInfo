@@ -14,11 +14,33 @@ typealias WeatherDataClosure = (_ weatherModel: WeatherViewModel) -> Void
 
 class WeatherService: BaseService {
     
-    func getWeather(forCity cityName: String, success: @escaping WeatherDataClosure) {
+    func getWeather(forCity cityName: String, success: @escaping WeatherDataClosure){
+        getWeatherFromAPi(forCity: cityName, success:success)
+    }
+    
+    func getCachedCitiesList() -> [WeatherViewModel] {
+        var result = [WeatherViewModel]()
+        if let cachedWeathers = PersistenceManager.loadNSArray(path: .CitiesWeather) {
+            for weather in cachedWeathers {
+                result.append(weather as! WeatherViewModel )
+            }
+        }
+        return result
+    }
+    
+    func updateCitiesList(citiesWeatherList: [WeatherViewModel]) {
+        let mutableObjects = NSMutableArray()
+        for weather in citiesWeatherList {
+            mutableObjects.add(weather)
+        }
+        PersistenceManager.saveNSArray(arrayToSave: mutableObjects, path: .CitiesWeather)
+    }
+    
+    private func getWeatherFromAPi(forCity cityName: String, success: @escaping WeatherDataClosure) {
         let path = String(format: ServiceUrls.GET_CITY_WEATHER_URL, cityName)
         showLoading()
         NetworkManager.performRequestWithPath(baseUrl: ServiceUrls.BASE_URL, path: path, requestMethod: .get, requestParam: nil, headersParam: nil, success: { respone in
-             self.hideLoading()
+            self.hideLoading()
             if let weatherDataModel :WeatherModel = Mapper<WeatherModel>().map(JSON: respone as! [String : Any]) {
                 let weatherViewModel = self.mapWeatherModelToWeatherViewModel(weatherDataModel)
                 success(weatherViewModel)
@@ -28,7 +50,7 @@ class WeatherService: BaseService {
         })
     }
     
-    func mapWeatherModelToWeatherViewModel (_ weatherModel: WeatherModel) -> WeatherViewModel {
+    private func mapWeatherModelToWeatherViewModel (_ weatherModel: WeatherModel) -> WeatherViewModel {
         var currentTemp = ""
         var name = ""
         var weatherType = WeatherType.Unknown
@@ -46,9 +68,10 @@ class WeatherService: BaseService {
             weatherType = weatherTypeValue
         }
         if let temp = weatherModel.main?.temp {
-             let convertedTemp = Int(temp - 273.15)
-             currentTemp = "\(convertedTemp)°"
+            let convertedTemp = Int(temp - 273.15)
+            currentTemp = "\(convertedTemp)°"
         }
+        
         return WeatherViewModel(name: name, weatherType: weatherType, currentTemp: currentTemp, date: date)
         
     }
