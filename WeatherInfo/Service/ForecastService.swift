@@ -30,7 +30,7 @@ class ForecastService: BaseService {
         NetworkManager.performRequestWithPath(baseUrl: ServiceUrls.BASE_URL, path: path, requestMethod: .get, requestParam: nil, headersParam: nil, success: { respone in
             self.hideLoading()
             if let forecastDataModel :ForecastsModel = Mapper<ForecastsModel>().map(JSON: respone as! [String : Any]) {
-                let forecastsList = self.mapForecastModelToForecastViewModel(forecastDataModel)
+                let forecastsList = ForecastMapper.mapForecastModelToForecastViewModel(forecastDataModel)
                 self.updateForecastsList(forCity: cityName, forecastsList: forecastsList)
                 success(forecastsList)
             }
@@ -59,46 +59,5 @@ class ForecastService: BaseService {
         }
         PersistenceManager.saveNSArray(arrayToSave: mutableObjects, path: .CityForecast, withName: cityName)
     }
-    
-    private func mapForecastModelToForecastViewModel (_ forecastDataModel: ForecastsModel) -> [ForecastViewModel] {
-        var forecastsList = [ForecastViewModel]()
-        if let forecastsData = forecastDataModel.list {
-            
-            for forecast in forecastsData {
-                
-                var highTemp = ""
-                var lowTemp = ""
-                var weatherType = WeatherType.Unknown
-                var date = ""
-                 var day = ""
-                if let max = forecast.main?.tempMax{
-                    let convertedTemp = Int(max - 273.15)
-                    highTemp = "\(convertedTemp)°"
-                }
-                if let min = forecast.main?.tempMin{
-                    let convertedTemp = Int(min - 273.15)
-                    lowTemp = "\(convertedTemp)°"
-                }
-                if let main = forecast.weather?[0].main, let weatherTypeValue = WeatherType(rawValue: main)  {
-                    weatherType = weatherTypeValue
-                }
-                
-                if let forecastDate = forecast.dt {
-                    let convertedDate = Date(timeIntervalSince1970: forecastDate)
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .full
-                    dateFormatter.dateFormat = "EEEE"
-                    dateFormatter.timeStyle = .none
-                    day = convertedDate.dayOfTheWeek()
-                    date = convertedDate.getDate()
-                }
-                
-                let forecastViewModel = ForecastViewModel(highTemp: highTemp, lowTemp: lowTemp, weatherType: weatherType, date: date, day: day)
-              
-                forecastsList.append(forecastViewModel)
-            }
-        }
-        
-        return forecastsList
-    }
+   
 }
