@@ -15,8 +15,8 @@ struct ServiceUrls {
     static let AppID =  "9dc28f87d11bace4c0b50937ae86a285"
     static let BASE_URL :String = "http://api.openweathermap.org/data/2.5/"
     static let GET_CITY_WEATHER_URL :String = "weather?q=%@&appid=\(AppID)"
-    static let GET_CITY_FORECAST_URL :String = "forecast?q=%@&mode=json&appid=\(AppID)"
     
+    static let GET_CITY_FORECAST_URL :String = "forecast?q=%@&mode=json&appid=\(AppID)"
 }
 
 

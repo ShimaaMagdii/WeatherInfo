@@ -20,6 +20,10 @@
             </dict>
         </dict>
     </dict>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need your location to get accurate weather</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to get accurate weather</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

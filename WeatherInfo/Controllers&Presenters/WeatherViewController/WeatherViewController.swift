@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol WeatherViewControllerProtocol: BaseViewControllerViewProtocol {
     func setWeatherModel(_ weatherModel: WeatherViewModel)
@@ -14,7 +15,7 @@ protocol WeatherViewControllerProtocol: BaseViewControllerViewProtocol {
 }
 
 class WeatherViewController: BaseViewController {
-    
+  
     var presenter: WeatherPresenter!
     var citiesWeatherList = [WeatherViewModel]()
     var weatherModel: WeatherViewModel! {
@@ -40,9 +41,15 @@ class WeatherViewController: BaseViewController {
         super.viewDidLoad()
         setupView()
         presenter = WeatherPresenter.init(delegate: self)
-        presenter.getWeather(forCity: "London")
-    }
+        }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+      //  LocationManager.sharedManager.updateLocation()
+        
+    }
+   
+   
     private func setupView(){
         searchTxtField.delegate = self
     }
@@ -75,6 +82,7 @@ extension WeatherViewController: UITextFieldDelegate {
         return true
     }
 }
+
 
 extension WeatherViewController: WeatherViewControllerProtocol {
     func setWeatherModel(_ weatherModel: WeatherViewModel){

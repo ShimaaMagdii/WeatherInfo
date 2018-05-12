@@ -9,7 +9,11 @@
 import Foundation
 
 class WeatherPresenter {
-    
+    var defaultCity = "London" {
+        didSet{
+             getWeather(forCity: defaultCity)
+        }
+    }
     let exceedNumberOfCitiesErrorMsg = "You allowed to add only 5 cities"
     let existingCityErrorMsg = "This City already existed"
     let allowedCount = 5
@@ -20,12 +24,16 @@ class WeatherPresenter {
     
     init(delegate: WeatherViewControllerProtocol){
         self.delegate = delegate
+       // LocationManager.sharedManager.setupDelegate(delegate: self)
+        getWeather(forCity: defaultCity)
     }
+    
     
     func getWeather(forCity cityName: String)
     {
-        service.getWeather(forCity: cityName) { [weak self] weatherModel in
-            guard let strongSelf = self else { return }
+        service.getWeather(forCity: cityName) { [weak self]
+            weatherModel in
+           guard let strongSelf = self else { return }
             strongSelf.citiesWeatherList.append(weatherModel)
             strongSelf.delegate.setCitiesWeatherList(strongSelf.citiesWeatherList)
             strongSelf.delegate.setWeatherModel(weatherModel)
@@ -55,4 +63,17 @@ class WeatherPresenter {
         }
         return false
     }
+}
+
+extension WeatherPresenter: LocationUpdateProtocol{
+    func userLocationUpdated(withCity userCity: String) {
+       
+        self.defaultCity = userCity
+    }
+    
+    func needLocationPermission() {
+       // getWeather(forCity: defaultCity)
+        self.defaultCity = "London"
+    }
+    
 }
