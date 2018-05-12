@@ -38,7 +38,7 @@ class ForecastService: BaseService {
                 var lowTemp = ""
                 var weatherType = WeatherType.Unknown
                 var date = ""
-                
+                 var day = ""
                 if let max = forecast.main?.tempMax{
                     let convertedTemp = Int(max - 273.15)
                     highTemp = "\(convertedTemp)°"
@@ -57,10 +57,11 @@ class ForecastService: BaseService {
                     dateFormatter.dateStyle = .full
                     dateFormatter.dateFormat = "EEEE"
                     dateFormatter.timeStyle = .none
-                    date = convertedDate.dayOfTheWeek()
+                    day = convertedDate.dayOfTheWeek()
+                    date = convertedDate.getDate()
                 }
                 
-                let forecastViewModel = ForecastViewModel(highTemp: highTemp, lowTemp: lowTemp, weatherType: weatherType, date: date)
+                let forecastViewModel = ForecastViewModel(highTemp: highTemp, lowTemp: lowTemp, weatherType: weatherType, date: date, day: day)
                 forecastsList.append(forecastViewModel)
             }
         }

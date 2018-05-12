@@ -21,10 +21,10 @@ extension String {
     func getDateWithformat (dataFormat:String ) -> Date {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat =  dataFormat //Your date format
+        dateFormatter.dateFormat =  dataFormat
         dateFormatter.timeZone =  TimeZone.current
         
-        let date:Date = dateFormatter.date(from: self)! //according to date format your date string
+        let date:Date = dateFormatter.date(from: self)!
         return date
     }
 }
@@ -33,6 +33,14 @@ extension Date {
     func dayOfTheWeek() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: self)
+    }
+    
+    func getDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.dateFormat = "EEEE"
+        dateFormatter.timeStyle = .short
         return dateFormatter.string(from: self)
     }
 }
@@ -52,14 +60,5 @@ extension UIView {
    
     func addCornerRadius(cornerRadius: CGFloat = 5){
         self.layer.cornerRadius = cornerRadius
-    }
-    
-}
-
-extension UIScrollView {
-    func scrollToBottom(animated: Bool) {
-        if self.contentSize.height < self.bounds.size.height { return }
-        let bottomOffset = CGPoint(x: 0, y: self.contentSize.height - self.bounds.size.height)
-        self.setContentOffset(bottomOffset, animated: animated)
     }
 }

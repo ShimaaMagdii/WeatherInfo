@@ -270,9 +270,15 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunday" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TV-4Z-pfH" userLabel="dayLabel">
-                                                            <rect key="frame" x="80" y="18" width="69.5" height="22.5"/>
+                                                            <rect key="frame" x="80" y="9" width="69.5" height="22.5"/>
                                                             <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
                                                             <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20/5/2018" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BzJ-vE-w8D" userLabel="dateLabel">
+                                                            <rect key="frame" x="80" y="33.5" width="78.5" height="19.5"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="90.5°" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhw-IS-1E6" userLabel="hightTemp">
@@ -290,13 +296,15 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstItem="0TV-4Z-pfH" firstAttribute="top" secondItem="usW-VA-Rzo" secondAttribute="top" constant="5" id="FSP-6K-jar"/>
                                                         <constraint firstItem="usW-VA-Rzo" firstAttribute="centerY" secondItem="eo4-3m-hYy" secondAttribute="centerY" id="GCw-EK-5J8"/>
                                                         <constraint firstItem="0TV-4Z-pfH" firstAttribute="leading" secondItem="usW-VA-Rzo" secondAttribute="trailing" constant="10" id="IF1-rM-YeE"/>
+                                                        <constraint firstItem="BzJ-vE-w8D" firstAttribute="leading" secondItem="0TV-4Z-pfH" secondAttribute="leading" id="IvK-uw-aJx"/>
                                                         <constraint firstItem="zhw-IS-1E6" firstAttribute="top" secondItem="usW-VA-Rzo" secondAttribute="top" constant="5" id="K37-Rn-7c3"/>
+                                                        <constraint firstItem="BzJ-vE-w8D" firstAttribute="top" secondItem="0TV-4Z-pfH" secondAttribute="bottom" constant="2" id="RhW-lB-UXr"/>
                                                         <constraint firstItem="VmX-71-e5r" firstAttribute="top" secondItem="zhw-IS-1E6" secondAttribute="bottom" constant="3" id="bSj-9N-xCc"/>
                                                         <constraint firstItem="usW-VA-Rzo" firstAttribute="leading" secondItem="eo4-3m-hYy" secondAttribute="leading" constant="20" id="dbH-Q5-gS9"/>
                                                         <constraint firstAttribute="trailing" secondItem="zhw-IS-1E6" secondAttribute="trailing" constant="20" id="in7-Be-SWA"/>
-                                                        <constraint firstItem="0TV-4Z-pfH" firstAttribute="centerY" secondItem="usW-VA-Rzo" secondAttribute="centerY" id="rMn-gv-ll9"/>
                                                         <constraint firstItem="VmX-71-e5r" firstAttribute="trailing" secondItem="zhw-IS-1E6" secondAttribute="trailing" id="reK-YB-UiE"/>
                                                     </constraints>
                                                 </view>
@@ -312,6 +320,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="containerView" destination="eo4-3m-hYy" id="zUV-bg-PaK"/>
+                                            <outlet property="dateLabel" destination="BzJ-vE-w8D" id="O54-Rm-nfm"/>
                                             <outlet property="dayLabel" destination="0TV-4Z-pfH" id="NUl-oi-9mz"/>
                                             <outlet property="highTemplbl" destination="zhw-IS-1E6" id="aT3-9t-MNE"/>
                                             <outlet property="lowTemplbl" destination="VmX-71-e5r" id="D7D-8r-ROy"/>

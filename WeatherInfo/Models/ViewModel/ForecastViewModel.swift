@@ -12,11 +12,13 @@ class ForecastViewModel {
     var lowTemp: String!
     var weatherType: WeatherType!
     var date: String!
+    var day: String!
     
-    init(highTemp: String, lowTemp:String, weatherType: WeatherType, date: String) {
+    init(highTemp: String, lowTemp:String, weatherType: WeatherType, date: String, day: String) {
         self.highTemp = highTemp
         self.lowTemp = lowTemp
         self.weatherType = weatherType
         self.date = date
+        self.day = day
     }
 }
