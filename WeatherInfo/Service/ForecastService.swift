@@ -25,8 +25,10 @@ class ForecastService: BaseService {
     
     
   private func getForecastFromAPI(forCity cityName: String, success: @escaping ForecastDataClosure) {
-        let path = String(format: ServiceUrls.GET_CITY_FORECAST_URL, cityName)
+    let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .decimalDigits)!
+        let path = String(format: ServiceUrls.GET_CITY_FORECAST_URL, encodedCityName)
         showLoading()
+    
         NetworkManager.performRequestWithPath(baseUrl: ServiceUrls.BASE_URL, path: path, requestMethod: .get, requestParam: nil, headersParam: nil, success: { respone in
             self.hideLoading()
             if let forecastDataModel :ForecastsModel = Mapper<ForecastsModel>().map(JSON: respone as! [String : Any]) {

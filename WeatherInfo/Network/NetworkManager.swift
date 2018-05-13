@@ -37,7 +37,7 @@ public class NetworkManager {
                                        failure          :@escaping FailureNetworkClousre){
         
         let url = (path != nil) ? baseUrl + path! : baseUrl
-       
+ 
             Alamofire.request(URL.init(string: url)!, method: requestMethod, parameters: requestParam, encoding: parameterEncoding, headers: headersParam)
                 .validate()
                 .responseJSON { (response) in

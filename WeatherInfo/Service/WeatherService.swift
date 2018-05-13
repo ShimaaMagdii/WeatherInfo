@@ -37,7 +37,8 @@ class WeatherService: BaseService {
     }
     
     private func getWeatherFromAPi(forCity cityName: String, success: @escaping WeatherDataClosure) {
-        let path = String(format: ServiceUrls.GET_CITY_WEATHER_URL, cityName)
+        let encodedCityName = cityName.addingPercentEncoding(withAllowedCharacters: .decimalDigits)!
+        let path = String(format: ServiceUrls.GET_CITY_WEATHER_URL, encodedCityName)
         showLoading()
         NetworkManager.performRequestWithPath(baseUrl: ServiceUrls.BASE_URL, path: path, requestMethod: .get, requestParam: nil, headersParam: nil, success: { respone in
             self.hideLoading()

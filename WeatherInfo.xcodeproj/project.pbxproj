@@ -20,6 +20,7 @@
 		9144F60720A753890023F04F /* weatherData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9144F60620A753890023F04F /* weatherData.json */; };
 		9144F60920A753A10023F04F /* forecastData.json in Resources */ = {isa = PBXBuildFile; fileRef = 9144F60820A753A00023F04F /* forecastData.json */; };
 		9144F60B20A756C60023F04F /* WeatherViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9144F60A20A756C60023F04F /* WeatherViewControllerTests.swift */; };
+		9144F60D20A79B0C0023F04F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9144F60C20A79B0C0023F04F /* SplashViewController.swift */; };
 		91BB247B20A340FB004E9AFB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BB247A20A340FB004E9AFB /* AppDelegate.swift */; };
 		91BB248020A340FB004E9AFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91BB247E20A340FB004E9AFB /* Main.storyboard */; };
 		91BB248220A340FC004E9AFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91BB248120A340FC004E9AFB /* Assets.xcassets */; };
@@ -82,6 +83,7 @@
 		9144F60620A753890023F04F /* weatherData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = weatherData.json; sourceTree = "<group>"; };
 		9144F60820A753A00023F04F /* forecastData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forecastData.json; sourceTree = "<group>"; };
 		9144F60A20A756C60023F04F /* WeatherViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewControllerTests.swift; sourceTree = "<group>"; };
+		9144F60C20A79B0C0023F04F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		91BB247720A340FB004E9AFB /* WeatherInfo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherInfo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91BB247A20A340FB004E9AFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91BB247F20A340FB004E9AFB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				910E447F20A4A9530000F770 /* BaseController */,
+				9144F60E20A82CB70023F04F /* SplashViewController */,
 				910E448320A4AA380000F770 /* WeatherViewController */,
 				91EB7C8720A60CB0004F0B77 /* ForecastViewController */,
 			);
@@ -246,6 +249,14 @@
 				91D1649920A6593600AB05F5 /* WeatherViewController+UITableView.swift */,
 			);
 			path = WeatherViewController;
+			sourceTree = "<group>";
+		};
+		9144F60E20A82CB70023F04F /* SplashViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9144F60C20A79B0C0023F04F /* SplashViewController.swift */,
+			);
+			path = SplashViewController;
 			sourceTree = "<group>";
 		};
 		91BB246E20A340FB004E9AFB = {
@@ -586,6 +597,7 @@
 				91BB24AE20A343A2004E9AFB /* BaseViewController.swift in Sources */,
 				91EB7C7E20A5DA8C004F0B77 /* ForecastViewController.swift in Sources */,
 				9144F60320A751BC0023F04F /* MappingManager.swift in Sources */,
+				9144F60D20A79B0C0023F04F /* SplashViewController.swift in Sources */,
 				91EB7C8020A5DB01004F0B77 /* ForecastPresenter.swift in Sources */,
 				91EB7C9120A6537D004F0B77 /* ForecastViewModel.swift in Sources */,
 				91EB7C8920A60E53004F0B77 /* ForecastCell.swift in Sources */,

@@ -32,12 +32,8 @@ class WeatherPresenter {
         if cachedList.count > 0 {
             citiesWeatherList = cachedList
             delegate.setCitiesWeatherList(cachedList)
-        }else {
-            // get defult city
-            // LocationManager.sharedManager.setupDelegate(delegate: self)
-            getWeather(forCity: defaultCity)
+            delegate.setWeatherModel(cachedList.first!)
         }
-        
     }
     
     func getWeather(forCity cityName: String)
@@ -54,10 +50,13 @@ class WeatherPresenter {
     }
     
     func updateCitiestList(withNewWeatherModel weatherModel: WeatherViewModel) {
-        citiesWeatherList.append(weatherModel)
-        delegate.setCitiesWeatherList(self.citiesWeatherList)
-        delegate.setWeatherModel(weatherModel)
-        service.updateCitiesList(citiesWeatherList: citiesWeatherList)
+            citiesWeatherList = service.getCachedCitiesList()
+        if !isExist(weatherModel.name) {
+            citiesWeatherList.append(weatherModel)
+            delegate.setCitiesWeatherList(self.citiesWeatherList)
+            delegate.setWeatherModel(weatherModel)
+            service.updateCitiesList(citiesWeatherList: citiesWeatherList)
+        }
     }
     
     func userRemovedCity(atIndex index: Int) {
@@ -86,13 +85,3 @@ class WeatherPresenter {
     }
 }
 
-extension WeatherPresenter: LocationUpdateProtocol{
-    func userLocationUpdated(withCity userCity: String) {
-        defaultCity = userCity
-    }
-    
-    func needLocationPermission() {
-        defaultCity = "London"
-    }
-    
-}

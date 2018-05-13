@@ -1,93 +1,109 @@
-//
-//  LocationManager.swift
-//  WeatherInfo
-//
-//  Created by Shimaa Magdi on 5/12/18.
-//  Copyright © 2018 ShimaaMagdi. All rights reserved.
-//
+////
+////  LocationManager.swift
+////  WeatherInfo
+////
+////  Created by Shimaa Magdi on 5/12/18.
+////  Copyright © 2018 ShimaaMagdi. All rights reserved.
+////
 
+import Foundation
 import UIKit
 import CoreLocation
 
-protocol LocationUpdateProtocol: class {
-    func userLocationUpdated(withCity userCity: String)
-    func needLocationPermission()
+enum LocationServiceState {
+    case notEnabled
+    case denied
+    case allowed
+    case notDetermined
 }
-class LocationManager: NSObject {
+
+protocol LocationManagerDelegate {
+    func locationManager(didUpdateLocation location:CLLocation)
+    func locationManager(didUpdateCity cityName:String)
+    func locationManager(didChangeAuthorization status:LocationServiceState)
     
-    private var locationManager : CLLocationManager = CLLocationManager()
-    private weak var delegate: LocationUpdateProtocol!
+}
+
+class LocationManager: NSObject {
     let geocoder = CLGeocoder()
     var placemark: CLPlacemark?
     var city: String? {
         didSet{
-            delegate.userLocationUpdated(withCity: city!)
+            delegate?.locationManager(didUpdateCity: city!)
         }
     }
-    var location: CLLocation?
+    var locationManager: CLLocationManager?
+    var currentLocation: CLLocation?
+    var delegate: LocationManagerDelegate?
     
-    static let sharedManager: LocationManager = {
-        let instance = LocationManager()
-        instance.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        instance.locationManager.delegate = instance
-        instance.locationManager.requestWhenInUseAuthorization()
-        return instance
+    override init() {
+        super.init()
         
+        self.locationManager = CLLocationManager()
+        guard let locationManager = self.locationManager else {
+            return
+        }
+        
+        locationManager.requestAlwaysAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+    }
+    
+    static let shared : LocationManager = {
+        let instance = LocationManager()
+        return instance
     }()
     
-    func setupDelegate(delegate: LocationUpdateProtocol){
-        LocationManager.sharedManager.delegate = delegate
-        LocationManager.sharedManager.updateLocation()
-    }
-    
-    func updateLocation() -> Void {
-        let authStatus = CLLocationManager.authorizationStatus()
-        if authStatus == .authorizedWhenInUse {
-            self.locationManager.startUpdatingLocation()
-        }else{
-             delegate.needLocationPermission()
+    func getLocationServiceState() -> LocationServiceState {
+        if CLLocationManager.locationServicesEnabled() {
+            switch(CLLocationManager.authorizationStatus()) {
+            case .notDetermined:
+                return .notDetermined
+            case .restricted, .denied:
+                return .denied
+            case .authorizedAlways, .authorizedWhenInUse:
+                return .allowed
+            }
+        } else {
+            return .notEnabled
         }
     }
     
-    func requestAuthorization(){
-        LocationManager.sharedManager.locationManager.requestWhenInUseAuthorization()
+    func openLocationSettings() {
+        UIApplication.shared.open(URL(string:"App-Prefs:root=LOCATION_SERVICES")!, options: [:], completionHandler: nil)
     }
     
-    func stopLocationManager() {
-        LocationManager.sharedManager.locationManager.stopUpdatingLocation()
-        LocationManager.sharedManager.locationManager.delegate = nil
+    func openAppLocationSetting() {
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(URL(string: UIApplicationOpenSettingsURLString)!)
+        }
+    }
+    
+    func startUpdatingLocation() {
+        self.locationManager!.startUpdatingLocation()
+    }
+    
+    func stopUpdatingLocation() {
+        self.locationManager!.stopUpdatingLocation()
     }
 }
 
 
-
-extension LocationManager : CLLocationManagerDelegate {
-    
+extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let latestLocation = locations.last!
-        
-        if location == nil || location!.horizontalAccuracy > latestLocation.horizontalAccuracy {
-            
-            location = latestLocation
-            stopLocationManager()
-            geocoder.reverseGeocodeLocation(latestLocation, completionHandler: { (placemarks, error) in
-                if error == nil, let placemark = placemarks, !placemark.isEmpty {
-                    self.placemark = placemark.last
-                }
-                self.parsePlacemarks()
-                
-            })
+        guard let location = locations.last else {
+            return
         }
+        self.currentLocation = location
+        delegate?.locationManager(didUpdateLocation: location)
+        
     }
-    func parsePlacemarks() {
-        if location != nil {
-            if let placemark = placemark {
-                if let city = placemark.locality, !city.isEmpty {
-                    self.city = city
-                }
-                
-            }
-        }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        delegate?.locationManager(didChangeAuthorization:getLocationServiceState())
     }
+    
 }

@@ -15,7 +15,7 @@ protocol WeatherViewControllerProtocol: BaseViewControllerViewProtocol {
 }
 
 class WeatherViewController: BaseViewController {
-  
+    var userCity: String!
     var presenter: WeatherPresenter!
     var citiesWeatherList = [WeatherViewModel]()
     var weatherModel: WeatherViewModel! {
@@ -36,20 +36,18 @@ class WeatherViewController: BaseViewController {
         checkUserInput()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter.getWeather(forCity: userCity)
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         presenter = WeatherPresenter.init(delegate: self)
-        }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-      //  LocationManager.sharedManager.updateLocation()
-        
     }
-   
-   
+    
     private func setupView(){
         searchTxtField.delegate = self
     }

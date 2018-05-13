@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RG7-q5-xKw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M90-D7-Eih">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -360,9 +360,48 @@
             </objects>
             <point key="canvasLocation" x="1111" y="34"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="gWz-yl-lNp">
+            <objects>
+                <viewController storyboardIdentifier="SplashViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="M90-D7-Eih" customClass="SplashViewController" customModule="WeatherInfo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6ub-HG-DTU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.69999998807907104" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallPaper" translatesAutoresizingMaskIntoConstraints="NO" id="8gQ-q3-ffs">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="BJg-yA-nHm">
+                                <rect key="frame" x="137" y="283.5" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="OND-hP-gjC"/>
+                                    <constraint firstAttribute="width" constant="100" id="pUD-pa-3Yw"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.28235294119999998" green="0.75294117650000003" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="8gQ-q3-ffs" firstAttribute="trailing" secondItem="0kR-gG-e7N" secondAttribute="trailing" id="37V-XZ-sBY"/>
+                            <constraint firstItem="8gQ-q3-ffs" firstAttribute="leading" secondItem="0kR-gG-e7N" secondAttribute="leading" id="60c-Yc-FxB"/>
+                            <constraint firstItem="8gQ-q3-ffs" firstAttribute="top" secondItem="6ub-HG-DTU" secondAttribute="top" id="bkk-9m-NHX"/>
+                            <constraint firstItem="BJg-yA-nHm" firstAttribute="centerY" secondItem="8gQ-q3-ffs" secondAttribute="centerY" id="e8j-zz-fuh"/>
+                            <constraint firstItem="8gQ-q3-ffs" firstAttribute="bottom" secondItem="0kR-gG-e7N" secondAttribute="bottom" id="rkX-cL-t4c"/>
+                            <constraint firstItem="BJg-yA-nHm" firstAttribute="centerX" secondItem="8gQ-q3-ffs" secondAttribute="centerX" id="wn8-mJ-Dl7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0kR-gG-e7N"/>
+                    </view>
+                    <connections>
+                        <segue destination="RG7-q5-xKw" kind="show" identifier="GoToLandingView" id="VeF-3f-5GZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2yf-DR-aAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1447" y="116"/>
+        </scene>
     </scenes>
     <resources>
         <image name="cloudy" width="256" height="256"/>
+        <image name="logo" width="20" height="20"/>
         <image name="search" width="14" height="14"/>
         <image name="wallPaper" width="245" height="436"/>
     </resources>

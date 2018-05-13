@@ -25,6 +25,7 @@ enum WeatherType: String {
     case Snow_Mini = "Snow Mini"
     case Thunderstorm_Mini = "Thunderstorm Mini"
     case Thunderstorm = "Thunderstorm"
+    case Mist = "Mist"
     case Unknown = "Unknown"
 }
 
